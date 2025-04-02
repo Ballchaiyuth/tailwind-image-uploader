@@ -60,7 +60,7 @@
         <div
           v-for="(img, i) in images"
           :key="i"
-          class="relative group border rounded-md shadow hover:shadow-lg overflow-hidden"
+          class="relative group border rounded-md shadow-sm hover:shadow-lg overflow-hidden"
         >
           <img
             :src="img.url"
@@ -176,32 +176,32 @@
           <div class="flex gap-2">
             <button
               @click="zoomIn"
-              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded"
+              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
             >
               +
             </button>
             <button
               @click="zoomOut"
-              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded"
+              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
             >
               −
             </button>
             <button
               @click="resetZoom"
-              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded"
+              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
             >
               100%
             </button>
             <a
               :href="currentImage.url"
               target="_blank"
-              class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+              class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-sm"
             >
               Open</a
             >
             <button
               @click="closeModal"
-              class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded"
+              class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded-sm"
             >
               Close
             </button>

@@ -24,7 +24,7 @@
       @drop.prevent="handleDrop"
       :class="{ 'bg-green-400/10': isDragging }"
     >
-      <p class="text-center mb-3">Drag & drop images here or</p>
+      <p class="text-center text-green-200 mb-3">Drag & drop images here or</p>
       <div class="flex justify-center">
         <button
           class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md"
@@ -51,7 +51,7 @@
       <div
         v-for="(img, index) in images"
         :key="index"
-        class="relative group overflow-hidden rounded-md shadow aspect-[2/1]"
+        class="relative group overflow-hidden rounded-md shadow-sm aspect-2/1"
       >
         <img
           :src="img.url"

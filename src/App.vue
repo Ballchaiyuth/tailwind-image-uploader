@@ -7,6 +7,7 @@
         <RouterLink to="/upload1">Uploader 1</RouterLink>
         <RouterLink to="/upload2">Uploader 2</RouterLink>
         <RouterLink to="/upload3">Uploader 3</RouterLink>
+        <RouterLink to="/upload4">Uploader 4</RouterLink>
       </nav>
     </header>
 

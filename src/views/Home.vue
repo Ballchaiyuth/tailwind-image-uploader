@@ -20,7 +20,7 @@
 
     <router-link
       to="/upload1"
-      class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-lg shadow transition"
+      class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-lg shadow-sm transition"
     >
       Start Exploring Uploaders
     </router-link>
