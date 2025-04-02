@@ -1,5 +1,5 @@
 {
-  "name": "vite-vue-starter",
+  "name": "tailwind-image-uploader",
   "version": "0.0.0",
   "scripts": {
     "postinstall": "npm start",
@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "vue": "^3.5.13",
+    "vue-code-highlight": "^0.7.8",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
