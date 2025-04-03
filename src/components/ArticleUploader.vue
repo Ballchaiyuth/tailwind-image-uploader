@@ -50,8 +50,8 @@
         <ImagePreview
           :url="img.url"
           @view="viewImage(img.url)"
-          @replace="triggerReplace(i)"
-          @remove="removeImage(i)"
+          @replace="() => triggerReplace(i)"
+          @remove="() => removeImage(i)"
         />
         <div
           class="text-[12px] text-center text-gray-500 w-full max-w-full px-1"
@@ -112,33 +112,18 @@ function handleFiles(fileList) {
   );
 }
 
-function removeImage(index) {
-  images.value.splice(index, 1);
-  emit(
-    "update",
-    images.value.map((img) => img.url),
-  );
-}
-
-function triggerReplace(index) {
-  return () => {
-    replaceIndex.value = index;
-    replaceInput.value?.click();
-  };
-}
-
 function onReplaceSelected(event) {
   const file = event.target.files[0];
   if (!file || !file.type.startsWith("image/") || replaceIndex.value === null)
     return;
 
   const url = URL.createObjectURL(file);
-  images.value[replaceIndex.value] = {
+  images.value.splice(replaceIndex.value, 1, {
     name: file.name,
     size: file.size,
     url,
     file,
-  };
+  });
   emit(
     "update",
     images.value.map((img) => img.url),
@@ -150,6 +135,19 @@ function onReplaceSelected(event) {
 
 function viewImage(url) {
   window.open(url, "_blank");
+}
+
+function triggerReplace(index) {
+  replaceIndex.value = index;
+  replaceInput.value?.click();
+}
+
+function removeImage(index) {
+  images.value.splice(index, 1);
+  emit(
+    "update",
+    images.value.map((img) => img.url),
+  );
 }
 
 function formatSize(bytes) {

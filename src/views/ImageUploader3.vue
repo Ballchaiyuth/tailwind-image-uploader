@@ -123,92 +123,96 @@
       </div>
     </div>
 
-    <!-- Modal Preview -->
-    <div
-      v-if="showModal"
-      class="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
-    >
+      <!-- Modal Preview -->
       <div
-        class="relative bg-white rounded-md p-4 max-w-full max-h-[90vh] mx-4 flex flex-col items-center"
+        v-if="showModal"
+        class="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
       >
-        <!-- Image Preview Area -->
+        <!-- Inner white modal box -->
         <div
-          class="overflow-hidden flex items-center justify-center cursor-grab active:cursor-grabbing"
-          @mousedown="startDrag"
-          @mousemove="onDrag"
-          @mouseup="endDrag"
-          @mouseleave="endDrag"
-          @wheel.prevent="onWheelZoom"
+          class="relative bg-white rounded-xl p-4 w-[90vw] max-w-4xl h-[80vh] mx-auto flex flex-col items-center"
         >
-          <img
-            :src="currentImage.url"
-            :alt="currentImage.name"
-            class="object-contain max-w-full max-h-[80vh] transition-transform"
-            :style="zoomedStyle"
-            draggable="false"
-          />
-
-          <!-- Navigation Buttons Floating Center Left/Right -->
-          <button
-            @click.stop="prevImage"
-            class="absolute left-2 top-1/2 -translate-y-1/2 bg-purple-400/50 hover:bg-purple-600/50 text-white px-3 py-2 rounded-full shadow-md"
+          <!-- Image Preview Area -->
+          <div
+            class="flex-1 w-full overflow-hidden flex items-center justify-center cursor-grab active:cursor-grabbing relative border-[3px] border-gray-300 rounded-md"
+            @mousedown="startDrag"
+            @mousemove="onDrag"
+            @mouseup="endDrag"
+            @mouseleave="endDrag"
           >
-            ←
-          </button>
-          <button
-            @click.stop="nextImage"
-            class="absolute right-2 top-1/2 -translate-y-1/2 bg-purple-400/50 hover:bg-purple-600/50 text-white px-3 py-2 rounded-full shadow-md"
-          >
-            →
-          </button>
-        </div>
+            <img
+              :src="currentImage.url"
+              :alt="currentImage.name"
+              class="h-full w-full object-contain transition-transform"
+              :style="zoomedStyle"
+              draggable="false"
+              @wheel="onWheelZoom"
+            />
 
-        <!-- Footer Buttons -->
-        <div
-          class="mt-4 flex justify-between items-center text-sm text-gray-600 px-4 w-full"
-        >
-          <div>
-            <p>
-              <strong>{{ currentImage.name }}</strong>
-            </p>
-            <p>{{ formatSize(currentImage.size) }}</p>
+            <!-- Navigation Buttons Centered Vertically on Sides -->
+            <button
+              @click.stop="prevImage"
+              class="absolute left-2 top-1/2 -translate-y-1/2 bg-purple-400/60 hover:bg-purple-600/60 text-white px-3 py-2 rounded-full shadow-md z-10"
+            >
+              ←
+            </button>
+            <button
+              @click.stop="nextImage"
+              class="absolute right-2 top-1/2 -translate-y-1/2 bg-purple-400/60 hover:bg-purple-600/60 text-white px-3 py-2 rounded-full shadow-md z-10"
+            >
+              →
+            </button>
           </div>
-          <div class="flex gap-2">
-            <button
-              @click="zoomIn"
-              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
-            >
-              +
-            </button>
-            <button
-              @click="zoomOut"
-              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
-            >
-              −
-            </button>
-            <button
-              @click="resetZoom"
-              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
-            >
-              100%
-            </button>
-            <a
-              :href="currentImage.url"
-              target="_blank"
-              class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-sm"
-            >
-              Open</a
-            >
-            <button
-              @click="closeModal"
-              class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded-sm"
-            >
-              Close
-            </button>
+
+          <!-- Footer Section -->
+          <div
+            class="mt-4 flex flex-col sm:flex-row sm:justify-between items-center gap-3 text-sm text-gray-600 px-4 w-full"
+          >
+            <!-- Left: File Info -->
+            <div class="text-center sm:text-left w-full sm:w-auto">
+              <p class="truncate max-w-xs">
+                <strong>{{ currentImage.name }}</strong>
+              </p>
+              <p>{{ formatSize(currentImage.size) }}</p>
+            </div>
+
+            <!-- Right: Zoom + Controls -->
+            <div class="flex gap-2 flex-wrap justify-center">
+              <button
+                @click="zoomIn"
+                class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
+              >
+                +
+              </button>
+              <button
+                @click="zoomOut"
+                class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
+              >
+                −
+              </button>
+              <button
+                @click="resetZoom"
+                class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
+              >
+                100%
+              </button>
+              <a
+                :href="currentImage.url"
+                target="_blank"
+                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-sm"
+              >
+                Open Image in New Tab</a
+              >
+              <button
+                @click="closeModal"
+                class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded-sm"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -296,78 +300,91 @@ function formatSize(bytes) {
   return `${bytes} B`;
 }
 
-function openModal(index) {
-  currentIndex.value = index;
-  resetZoom();
-  showModal.value = true;
-}
-
-function closeModal() {
-  showModal.value = false;
-  resetZoom();
-}
-
-function zoomIn() {
-  zoom.value = Math.min(zoom.value + 0.25, 3);
-}
-
-function zoomOut() {
-  zoom.value = Math.max(zoom.value - 0.25, 0.5);
-}
-
-function resetZoom() {
-  zoom.value = 1;
-  dragOffset.value = { x: 0, y: 0 };
-}
-
-function startDrag(e) {
-  if (zoom.value <= 1) return;
-  isDraggingImage.value = true;
-  dragStart.value = { x: e.clientX, y: e.clientY };
-}
-
-function onDrag(e) {
-  if (!isDraggingImage.value) return;
-  const dx = e.clientX - dragStart.value.x;
-  const dy = e.clientY - dragStart.value.y;
-  dragOffset.value.x += dx;
-  dragOffset.value.y += dy;
-  dragStart.value = { x: e.clientX, y: e.clientY };
-}
-
-function endDrag() {
-  isDraggingImage.value = false;
-}
-
-function prevImage() {
-  if (images.value.length < 2) return;
-  currentIndex.value =
-    (currentIndex.value - 1 + images.value.length) % images.value.length;
-  resetZoom();
-}
-
-function nextImage() {
-  if (images.value.length < 2) return;
-  currentIndex.value = (currentIndex.value + 1) % images.value.length;
-  resetZoom();
-}
-
-function handleKeyDown(e) {
-  if (!showModal.value) return;
-  if (e.key === "Escape") {
-    closeModal();
-  } else if (e.key === "ArrowLeft") {
-    prevImage();
-  } else if (e.key === "ArrowRight") {
-    nextImage();
+  function openModal(index) {
+    currentIndex.value = index;
+    resetZoom();
+    showModal.value = true;
   }
-}
 
-onMounted(() => {
-  window.addEventListener("keydown", handleKeyDown);
-});
+  function closeModal() {
+    showModal.value = false;
+    resetZoom();
+  }
 
-onBeforeUnmount(() => {
-  window.removeEventListener("keydown", handleKeyDown);
-});
+  const ZOOM_MIN = 0.1;
+  const ZOOM_MAX = 5;
+  const ZOOM_STEP = 0.2;
+
+  function zoomIn() {
+    zoom.value = Math.min(zoom.value + ZOOM_STEP, ZOOM_MAX);
+  }
+
+  function zoomOut() {
+    zoom.value = Math.max(zoom.value - ZOOM_STEP, ZOOM_MIN);
+  }
+
+  function resetZoom() {
+    zoom.value = 1;
+    dragOffset.value = { x: 0, y: 0 };
+  }
+
+  function startDrag(e) {
+    if (zoom.value <= 1) return;
+    isDraggingImage.value = true;
+    dragStart.value = { x: e.clientX, y: e.clientY };
+  }
+
+  function onDrag(e) {
+    if (!isDraggingImage.value) return;
+    const dx = e.clientX - dragStart.value.x;
+    const dy = e.clientY - dragStart.value.y;
+    dragOffset.value.x += dx;
+    dragOffset.value.y += dy;
+    dragStart.value = { x: e.clientX, y: e.clientY };
+  }
+
+  function endDrag() {
+    isDraggingImage.value = false;
+  }
+
+    function onWheelZoom(e) {
+    e.preventDefault();
+    if (e.deltaY < 0) {
+      zoomIn();
+    } else {
+      zoomOut();
+    }
+  }
+
+  function prevImage() {
+    if (images.value.length < 2) return;
+    currentIndex.value =
+      (currentIndex.value - 1 + images.value.length) % images.value.length;
+    resetZoom();
+  }
+
+  function nextImage() {
+    if (images.value.length < 2) return;
+    currentIndex.value = (currentIndex.value + 1) % images.value.length;
+    resetZoom();
+  }
+
+  function handleKeyDown(e) {
+    if (!showModal.value) return;
+    if (e.key === "Escape") {
+      closeModal();
+    } else if (e.key === "ArrowLeft") {
+      prevImage();
+    } else if (e.key === "ArrowRight") {
+      nextImage();
+    }
+  }
+
+  onMounted(() => {
+    window.addEventListener("keydown", handleKeyDown);
+  });
+
+  onBeforeUnmount(() => {
+    window.removeEventListener("keydown", handleKeyDown);
+  });
 </script>

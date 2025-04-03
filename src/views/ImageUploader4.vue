@@ -21,8 +21,8 @@
         @preview="handleFormPreview"
       />
 
-      <!-- Right: Preview -->
-      <UploaderPreview :data="previewData" :is-dark="isDark" />
+      <!-- Right: Mobile Preview -->
+      <MobilePreview :data="previewData" :is-dark="isDark" />
     </div>
 
     <!-- Theme Switch Toggle -->
@@ -57,9 +57,9 @@
 
 <script setup>
 import { ref } from "vue";
+import MobilePreview from "../components/MobilePreview.vue";
 import UploaderForm from "../components/UploaderForm.vue";
 import UploaderHeader from "../components/UploaderHeader.vue";
-import UploaderPreview from "../components/UploaderPreview.vue";
 
 const formRef = ref(null);
 const previewData = ref({});

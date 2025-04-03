@@ -172,8 +172,8 @@ function handlePreview() {
     description: description.value,
     cover: cover.value,
     images: images.value,
-    likeCount: 2,
-    shareCount: 2,
+    likeCount: 999,
+    shareCount: 100,
   };
   emit("preview", preview);
   emit("update-preview", preview);
