@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-import { defineExpose, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
   url: String,
