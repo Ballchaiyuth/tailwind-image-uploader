@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative group border rounded-md shadow-sm hover:shadow-lg overflow-hidden w-full"
+    class="relative group border rounded-md shadow-xs hover:shadow-lg overflow-hidden w-full"
   >
     <!-- Dark overlay during upload -->
     <div

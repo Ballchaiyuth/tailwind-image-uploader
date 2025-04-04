@@ -18,7 +18,7 @@
   </div>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 .nav-header {
   @apply bg-gray-800 text-white shadow;
 }
@@ -30,4 +30,4 @@
 .nav-container a {
   @apply px-3 py-1 rounded font-medium transition hover:bg-gray-700;
 }
-</style>
+</style> -->
