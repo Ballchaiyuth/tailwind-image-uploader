@@ -8,6 +8,17 @@
       drag-and-drop, and image management.
     </p>
 
+    <!-- Alerts -->
+    <div v-if="alertMessages.length" class="mb-4 w-full max-w-2xl space-y-2">
+      <div
+        v-for="alert in alertMessages"
+        :key="alert.id"
+        class="bg-yellow-100 text-yellow-800 px-4 py-2 border border-yellow-300 rounded text-sm shadow"
+      >
+        {{ alert.message }}
+      </div>
+    </div>
+
     <!-- Config Inputs -->
     <div class="flex gap-4 items-center mb-4">
       <label class="text-sm">
@@ -248,6 +259,7 @@ const replaceIndex = ref(null);
 
 const images = ref([]);
 const isDragging = ref(false);
+const alertMessages = ref([]);
 
 const showModal = ref(false);
 const currentIndex = ref(null);
@@ -265,6 +277,14 @@ const zoomedStyle = computed(() => ({
   transform: `scale(${zoom.value}) translate(${dragOffset.value.x}px, ${dragOffset.value.y}px)`,
   transition: isDraggingImage.value ? "none" : "transform 0.3s",
 }));
+
+function showAlert(message) {
+  const id = Date.now() + Math.random();
+  alertMessages.value.push({ id, message });
+  setTimeout(() => {
+    alertMessages.value = alertMessages.value.filter((a) => a.id !== id);
+  }, 3000);
+}
 
 function onFilesSelected(event) {
   const files = Array.from(event.target.files);
@@ -290,14 +310,14 @@ function handleFiles(fileList) {
 
     const fileSizeKB = file.size / 1024;
     if (fileSizeKB > maxSizeKB.value) {
-      alert(
-        `File "${file.name}" is too large. Max allowed is ${maxSizeKB.value}KB.`,
+      showAlert(
+        `File \"${file.name}\" is too large. Max allowed is ${maxSizeKB.value}KB.`,
       );
       continue;
     }
 
     if (existingNames.has(file.name)) {
-      alert(`File name "${file.name}" already exists.`);
+      showAlert(`File name \"${file.name}\" already exists.`);
       continue;
     }
 
