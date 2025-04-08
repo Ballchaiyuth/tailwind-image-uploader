@@ -1,5 +1,5 @@
 <template>
-  <div class="w-2/3 bg-white rounded-lg shadow-xs p-6">
+  <div class="w-2/3 bg-white rounded-lg shadow-sm p-6">
     <h3 class="text-base font-semibold mb-4">Main Information</h3>
 
     <!-- Mock Inputs -->
@@ -7,7 +7,7 @@
       <div>
         <label class="block text-sm font-medium text-gray-600 mb-1">Type</label>
         <select
-          class="w-full border rounded-xs px-3 py-2 text-sm bg-gray-100 text-gray-700"
+          class="w-full border rounded-sm px-3 py-2 text-sm bg-gray-100 text-gray-700"
           disabled
         >
           <option selected>2</option>
@@ -18,7 +18,7 @@
           >Highlight</label
         >
         <select
-          class="w-full border rounded-xs px-3 py-2 text-sm bg-gray-100 text-gray-700"
+          class="w-full border rounded-sm px-3 py-2 text-sm bg-gray-100 text-gray-700"
           disabled
         >
           <option selected>Not a highlight</option>
@@ -29,7 +29,7 @@
           >Category</label
         >
         <select
-          class="w-full border rounded-xs px-3 py-2 text-sm bg-gray-100 text-gray-700"
+          class="w-full border rounded-sm px-3 py-2 text-sm bg-gray-100 text-gray-700"
           disabled
         >
           <option selected>2</option>
@@ -38,7 +38,7 @@
       <div>
         <label class="block text-sm font-medium text-gray-600 mb-1">Tags</label>
         <select
-          class="w-full border rounded-xs px-3 py-2 text-sm bg-gray-100 text-gray-700"
+          class="w-full border rounded-sm px-3 py-2 text-sm bg-gray-100 text-gray-700"
           disabled
         >
           <option selected>-</option>
@@ -52,7 +52,7 @@
       >
       <input
         type="text"
-        class="w-full border rounded-xs px-3 py-2 text-sm"
+        class="w-full border rounded-sm px-3 py-2 text-sm"
         placeholder="Please input field"
       />
     </div>
@@ -63,7 +63,7 @@
       <input
         v-model="title"
         type="text"
-        class="w-full border rounded-xs px-3 py-2 text-sm"
+        class="w-full border rounded-sm px-3 py-2 text-sm"
         placeholder="Please input title"
       />
     </div>
@@ -94,7 +94,7 @@
       >
       <input
         type="text"
-        class="w-full border rounded-xs px-3 py-2 text-sm"
+        class="w-full border rounded-sm px-3 py-2 text-sm"
         placeholder="DLD"
       />
     </div>
@@ -106,7 +106,7 @@
       >
       <textarea
         v-model="description"
-        class="w-full border rounded-xs px-3 py-2 text-sm"
+        class="w-full border rounded-sm px-3 py-2 text-sm"
         placeholder="Please input description"
       ></textarea>
     </div>
@@ -115,7 +115,7 @@
       <label class="block text-sm font-medium text-gray-600 mb-1"
         >Custom Field</label
       >
-      <input type="text" class="w-full border rounded-xs px-3 py-2 text-sm" />
+      <input type="text" class="w-full border rounded-sm px-3 py-2 text-sm" />
     </div>
   </div>
 </template>

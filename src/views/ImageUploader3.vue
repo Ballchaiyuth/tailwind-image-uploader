@@ -13,7 +13,7 @@
       <div
         v-for="alert in alertMessages"
         :key="alert.id"
-        class="bg-yellow-100 text-yellow-800 px-4 py-2 border border-yellow-300 rounded-sm text-sm shadow-sm"
+        class="bg-yellow-100 text-yellow-800 px-4 py-2 border border-yellow-300 rounded text-sm shadow"
       >
         {{ alert.message }}
       </div>
@@ -26,7 +26,7 @@
         <input
           v-model.number="maxSizeKB"
           type="number"
-          class="ml-1 w-20 px-1 py-0.5 rounded-sm text-black bg-white"
+          class="ml-1 w-20 px-1 py-0.5 rounded text-black"
         />
       </label>
       <label class="text-sm">
@@ -34,7 +34,7 @@
         <input
           v-model="ratioText"
           type="text"
-          class="ml-1 w-24 px-1 py-0.5 rounded-sm text-black bg-white"
+          class="ml-1 w-24 px-1 py-0.5 rounded text-black"
         />
       </label>
     </div>
@@ -91,7 +91,7 @@
         <div
           v-for="(img, i) in images"
           :key="i"
-          class="relative group border rounded-md shadow-xs hover:shadow-lg overflow-hidden"
+          class="relative group border rounded-md shadow-sm hover:shadow-lg overflow-hidden"
         >
           <img
             :src="img.url"
@@ -214,32 +214,32 @@
           <div class="flex gap-2 flex-wrap justify-center">
             <button
               @click="zoomIn"
-              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-xs"
+              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
             >
               +
             </button>
             <button
               @click="zoomOut"
-              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-xs"
+              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
             >
               −
             </button>
             <button
               @click="resetZoom"
-              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-xs"
+              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
             >
               100%
             </button>
             <a
               :href="currentImage.url"
               target="_blank"
-              class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-xs"
+              class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-sm"
             >
               Open Image in New Tab</a
             >
             <button
               @click="closeModal"
-              class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded-xs"
+              class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded-sm"
             >
               Close
             </button>

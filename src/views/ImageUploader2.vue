@@ -51,7 +51,7 @@
       <div
         v-for="(img, index) in images"
         :key="index"
-        class="relative group overflow-hidden rounded-md shadow-xs aspect-2/1"
+        class="relative group overflow-hidden rounded-md shadow-sm aspect-2/1"
       >
         <img
           :src="img.url"
