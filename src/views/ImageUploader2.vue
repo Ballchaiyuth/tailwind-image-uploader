@@ -51,7 +51,7 @@
       <div
         v-for="(img, index) in images"
         :key="index"
-        class="relative group overflow-hidden rounded-md shadow-sm aspect-2/1"
+        class="relative group overflow-hidden rounded-md shadow-xs aspect-2/1"
       >
         <img
           :src="img.url"
@@ -85,7 +85,7 @@
               class="rounded-full p-1 bg-white/50 hover:bg-white/20 transition"
             >
               <img
-                src="../assets/icons/delete.svg"
+                src="@/assets/icons/delete.svg"
                 alt="Delete"
                 class="w-5 h-5 text-white"
               />

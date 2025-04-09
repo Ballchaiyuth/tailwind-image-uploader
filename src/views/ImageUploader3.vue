@@ -13,28 +13,49 @@
       <div
         v-for="alert in alertMessages"
         :key="alert.id"
-        class="bg-yellow-100 text-yellow-800 px-4 py-2 border border-yellow-300 rounded text-sm shadow"
+        class="bg-yellow-100 text-yellow-800 px-4 py-2 border border-yellow-300 rounded-sm text-sm shadow-sm"
       >
         {{ alert.message }}
       </div>
     </div>
 
     <!-- Config Inputs -->
-    <div class="flex gap-4 items-center mb-4">
-      <label class="text-sm">
+    <div class="flex gap-4 items-center mb-4 pr-4">
+      <!-- Max Size -->
+      <label class="text-sm flex items-center gap-1">
         Max Size (KB):
-        <input
-          v-model.number="maxSizeKB"
-          type="number"
-          class="ml-1 w-20 px-1 py-0.5 rounded text-black"
-        />
+        <div
+          class="flex h-[40px] items-center border border-gray-600 rounded-md bg-gray-800 focus-within:ring-2 focus-within:ring-purple-500"
+        >
+          <input
+            v-model.number="maxSizeKB"
+            type="text"
+            class="w-24 px-2 py-1 text-purple-200 bg-transparent outline-none"
+          />
+          <div class="flex flex-col">
+            <button
+              @click="maxSizeKB++"
+              class="text-xs px-1 py-0.5 hover:bg-gray-700 text-purple-300 rounded-tr-md"
+            >
+              ▲
+            </button>
+            <button
+              @click="maxSizeKB = Math.max(0, maxSizeKB - 1)"
+              class="text-xs px-1 py-0.5 hover:bg-gray-700 text-purple-300 rounded-br-md"
+            >
+              ▼
+            </button>
+          </div>
+        </div>
       </label>
+
+      <!-- Ratio -->
       <label class="text-sm">
         Ratio (e.g. 16:9):
         <input
           v-model="ratioText"
           type="text"
-          class="ml-1 w-24 px-1 py-0.5 rounded text-black"
+          class="w-24 h-[40px] px-2 py-1 rounded-md bg-gray-800 text-purple-200 border border-gray-600 placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
         />
       </label>
     </div>
@@ -58,7 +79,7 @@
         @click="fileInput.click()"
       >
         <img
-          src="../assets/icons/icon-upload.svg"
+          src="@/assets/icons/icon-upload.svg"
           alt="Upload Icon"
           class="h-10 w-10 opacity-80"
         />
@@ -91,7 +112,7 @@
         <div
           v-for="(img, i) in images"
           :key="i"
-          class="relative group border rounded-md shadow-sm hover:shadow-lg overflow-hidden"
+          class="relative group border rounded-md shadow-xs hover:shadow-lg overflow-hidden"
         >
           <img
             :src="img.url"
@@ -112,7 +133,7 @@
                 class="rounded-full p-1 bg-white hover:bg-white/80 transition"
               >
                 <img
-                  src="../assets/icons/eye.svg"
+                  src="@/assets/icons/eye.svg"
                   alt="Preview"
                   class="w-5 h-5"
                 />
@@ -125,7 +146,7 @@
                 class="rounded-full p-1 bg-white hover:bg-white/80 transition"
               >
                 <img
-                  src="../assets/icons/replace.svg"
+                  src="@/assets/icons/replace.svg"
                   alt="Replace"
                   class="w-5 h-5"
                 />
@@ -138,7 +159,7 @@
                 class="rounded-full p-1 bg-white hover:bg-white/80 transition"
               >
                 <img
-                  src="../assets/icons/delete.svg"
+                  src="@/assets/icons/delete.svg"
                   alt="Delete"
                   class="w-5 h-5"
                 />
@@ -214,32 +235,32 @@
           <div class="flex gap-2 flex-wrap justify-center">
             <button
               @click="zoomIn"
-              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
+              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-xs"
             >
               +
             </button>
             <button
               @click="zoomOut"
-              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
+              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-xs"
             >
               −
             </button>
             <button
               @click="resetZoom"
-              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-sm"
+              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-xs"
             >
               100%
             </button>
             <a
               :href="currentImage.url"
               target="_blank"
-              class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-sm"
+              class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-xs"
             >
               Open Image in New Tab</a
             >
             <button
               @click="closeModal"
-              class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded-sm"
+              class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded-xs"
             >
               Close
             </button>
@@ -283,7 +304,7 @@ function showAlert(message) {
   alertMessages.value.push({ id, message });
   setTimeout(() => {
     alertMessages.value = alertMessages.value.filter((a) => a.id !== id);
-  }, 3000);
+  }, 5000);
 }
 
 function onFilesSelected(event) {
@@ -304,6 +325,8 @@ function parseRatio(text) {
 
 function handleFiles(fileList) {
   const existingNames = new Set(images.value.map((img) => img.name));
+  const expectedRatio = parseRatio(ratioText.value);
+  const loadPromises = [];
 
   for (const file of fileList) {
     if (!file.type.startsWith("image/")) continue;
@@ -311,34 +334,47 @@ function handleFiles(fileList) {
     const fileSizeKB = file.size / 1024;
     if (fileSizeKB > maxSizeKB.value) {
       showAlert(
-        `File \"${file.name}\" is too large. Max allowed is ${maxSizeKB.value}KB.`,
+        `File "${file.name}" is too large. Max allowed is ${maxSizeKB.value}KB.`,
       );
       continue;
     }
 
     if (existingNames.has(file.name)) {
-      showAlert(`File name \"${file.name}\" already exists.`);
+      showAlert(`File name "${file.name}" already exists.`);
       continue;
     }
 
     const url = URL.createObjectURL(file);
 
-    const img = new Image();
-    img.onload = () => {
-      const ratio = img.width / img.height;
-      const expectedRatio = parseRatio(ratioText.value);
-      const isValidRatio = Math.abs(ratio - expectedRatio) < 0.1;
+    const promise = new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const ratio = img.width / img.height;
+        const isValidRatio = Math.abs(ratio - expectedRatio) < 0.1;
 
-      images.value.push({
-        name: file.name,
-        size: file.size,
-        url,
-        objectUrl: url,
-        invalidRatio: !isValidRatio,
-      });
-    };
-    img.src = url;
+        resolve({
+          name: file.name,
+          size: file.size,
+          url,
+          objectUrl: url,
+          invalidRatio: !isValidRatio,
+        });
+      };
+      img.onerror = () => {
+        showAlert(`Failed to load image "${file.name}".`);
+        resolve(null);
+      };
+      img.src = url;
+    });
+
+    loadPromises.push(promise);
   }
+
+  Promise.all(loadPromises).then((results) => {
+    for (const img of results) {
+      if (img) images.value.push(img);
+    }
+  });
 }
 
 function removeImage(index) {
@@ -354,18 +390,61 @@ function triggerReplace(index) {
 
 function onReplaceSelected(event) {
   const file = event.target.files[0];
-  if (file && file.type.startsWith("image/") && replaceIndex.value !== null) {
-    const url = URL.createObjectURL(file);
-    const old = images.value[replaceIndex.value];
-    URL.revokeObjectURL(old?.objectUrl);
+  const expectedRatio = parseRatio(ratioText.value);
+  const existingNames = new Set(
+    images.value.map((img, idx) => idx !== replaceIndex.value && img.name),
+  );
 
-    images.value[replaceIndex.value] = {
-      name: file.name,
-      size: file.size,
-      url,
-      objectUrl: url,
+  if (file && file.type.startsWith("image/") && replaceIndex.value !== null) {
+    const fileSizeKB = file.size / 1024;
+    if (fileSizeKB > maxSizeKB.value) {
+      showAlert(
+        `File "${file.name}" is too large. Max allowed is ${maxSizeKB.value}KB.`,
+      );
+      resetReplaceInput();
+      return;
+    }
+
+    if (existingNames.has(file.name)) {
+      showAlert(`File name "${file.name}" already exists.`);
+      resetReplaceInput();
+      return;
+    }
+
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+
+    img.onload = () => {
+      const ratio = img.width / img.height;
+      const isValidRatio = Math.abs(ratio - expectedRatio) < 0.1;
+
+      const old = images.value[replaceIndex.value];
+      URL.revokeObjectURL(old?.objectUrl);
+
+      images.value[replaceIndex.value] = {
+        name: file.name,
+        size: file.size,
+        url,
+        objectUrl: url,
+        invalidRatio: !isValidRatio,
+      };
+
+      resetReplaceInput();
     };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      showAlert(`Failed to load image "${file.name}".`);
+      resetReplaceInput();
+    };
+
+    img.src = url;
+  } else {
+    resetReplaceInput();
   }
+}
+
+function resetReplaceInput() {
   replaceInput.value.value = "";
   replaceIndex.value = null;
 }

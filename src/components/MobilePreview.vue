@@ -27,7 +27,7 @@
       <!-- Content Area -->
       <div class="flex-1 p-4 flex flex-col gap-2 bg-gray-50">
         <!-- Image Carousel -->
-        <div class="relative w-full h-40 rounded-sm overflow-hidden">
+        <div class="relative w-full h-40 rounded-xs overflow-hidden">
           <div
             class="w-full h-full flex transition-transform duration-500 ease-in-out"
             :style="`transform: translateX(-${currentIndex * 100}%);`"
@@ -38,7 +38,7 @@
             <div
               v-for="(img, i) in imageList"
               :key="i"
-              class="w-full h-full flex-shrink-0"
+              class="w-full h-full shrink-0"
             >
               <img
                 :src="img.url || img"
@@ -52,14 +52,14 @@
           <button
             v-if="imageList.length > 1"
             @click="prev"
-            class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-black px-2 py-1 rounded-full shadow"
+            class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-black px-2 py-1 rounded-full shadow-sm"
           >
             ←
           </button>
           <button
             v-if="imageList.length > 1"
             @click="next"
-            class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-black px-2 py-1 rounded-full shadow"
+            class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-black px-2 py-1 rounded-full shadow-sm"
           >
             →
           </button>
@@ -87,16 +87,12 @@
         <div class="bg-gray-200 rounded-md py-2 px-4">
           <div class="flex justify-between max-w-full">
             <div class="w-1/3 flex justify-center items-center gap-1 text-sm">
-              <img src="../assets/icons/like.svg" alt="Like" class="w-5 h-5" />
+              <img src="@/assets/icons/like.svg" alt="Like" class="w-5 h-5" />
               <span>{{ data?.likeCount || 0 }}</span>
             </div>
             <div class="w-1/3"></div>
             <div class="w-1/3 flex justify-center items-center gap-1 text-sm">
-              <img
-                src="../assets/icons/share.svg"
-                alt="Share"
-                class="w-5 h-5"
-              />
+              <img src="@/assets/icons/share.svg" alt="Share" class="w-5 h-5" />
               <span>{{ data?.shareCount || 0 }}</span>
             </div>
           </div>
@@ -113,7 +109,7 @@
 
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
-import placeholder from "../assets/images/go-placeholder.png";
+import placeholder from "@/assets/images/go-placeholder.png";
 
 const props = defineProps({
   data: Object,
